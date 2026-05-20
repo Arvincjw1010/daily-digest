@@ -29,12 +29,10 @@ def main():
     load_dotenv()  # 从 .env 文件加载环境变量
     config = load_config()
 
-    # 必填环境变量
+    # 必填
     deepseek_api_key = get_env_or_exit("DEEPSEEK_API_KEY")
-    bark_key = get_env_or_exit("BARK_KEY")
 
     deepseek_model = config.get("deepseek", {}).get("model", "deepseek-chat")
-    bark_server_url = config.get("push", {}).get("bark", {}).get("server_url")
 
     all_summaries = []
 
@@ -66,14 +64,20 @@ def main():
     title = f"每日资讯 · {today}"
     content = "\n\n---\n\n".join(all_summaries)
 
-    # 推送到 Bark（iPhone）
-    print(f"\n{'='*50}")
-    print(f"  推送摘要到 iPhone...（共 {len(all_summaries)} 个领域）")
-    print(f"{'='*50}")
-    push_to_bark(bark_key, title, content, bark_server_url)
-
-    # 可选：推送到微信测试号
     push_config = config.get("push", {})
+
+    # Bark（iPhone，可选）
+    bark_key = os.environ.get("BARK_KEY")
+    if bark_key:
+        print(f"\n{'='*50}")
+        print(f"  推送摘要到 iPhone...（共 {len(all_summaries)} 个领域）")
+        print(f"{'='*50}")
+        bark_server_url = push_config.get("bark", {}).get("server_url")
+        push_to_bark(bark_key, title, content, bark_server_url)
+    else:
+        print("\n  [SKIP] BARK_KEY 未设置，跳过 Bark 推送")
+
+    # 微信测试号（可选）
     wechat_config = push_config.get("wechat", {})
     if wechat_config.get("enabled", False):
         print(f"\n{'='*50}")
