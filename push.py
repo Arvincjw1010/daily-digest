@@ -1,5 +1,6 @@
 """推送模块：Bark（iOS） + 微信测试号（可选）"""
 
+import re
 from typing import Optional
 
 import requests
@@ -82,8 +83,28 @@ def _get_followers(access_token: str) -> list[str]:
         return []
 
 
+def _wechat_format(text: str, max_len: int = 600) -> str:
+    """把 Markdown 转为微信模板消息能显示的纯文本，并限制长度。"""
+    # 去掉 Markdown 链接标记: [text](url) -> text (url)
+    text = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'\1 (\2)', text)
+    # 去掉 # 标题标记
+    text = re.sub(r'^#+\s*', '', text, flags=re.MULTILINE)
+    # 去掉 ** 加粗
+    text = text.replace('**', '')
+    # 去掉 --- 分隔线
+    text = re.sub(r'^---+$', '', text, flags=re.MULTILINE)
+    # 去掉多余空行
+    text = re.sub(r'\n{3,}', '\n\n', text)
+    text = text.strip()
+
+    if len(text) > max_len:
+        text = text[:max_len] + '\n\n... (内容过长，已截断)'
+    return text
+
+
 def _send_template(access_token: str, user_id: str, template_id: str, title: str, content: str) -> bool:
     """向单个用户发送模板消息。"""
+    content = _wechat_format(content)
     try:
         resp = requests.post(
             "https://api.weixin.qq.com/cgi-bin/message/template/send",
