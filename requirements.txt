@@ -3,5 +3,3 @@ pyyaml>=6.0
 openai>=1.0.0
 feedparser>=6.0.10
 python-dotenv>=1.0.0
-# 可选：安装后启用 Web 搜索功能（无需 API key）
-# duckduckgo-search>=4.0.0

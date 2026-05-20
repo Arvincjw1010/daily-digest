@@ -1,12 +1,8 @@
-# === 添加新领域的方法 ===
-# 在 interests 列表里加一项即可，格式如下：
+# 添加新领域：在 interests 里加一项即可
 #   - name: "领域名"
 #     rss_feeds: ["rss地址1", "rss地址2"]
 #     keywords: ["关键词1", "keyword2"]
-#     max_articles: 5   # 这个领域最多取几条
-#
-# RSS 和 keywords 可以都填，也可以只填一个
-# 没有 RSS 源时，装上 duckduckgo-search 就能用 web 搜索
+#     max_articles: 5
 
 interests:
   - name: "AI / 大模型"
@@ -20,17 +16,3 @@ interests:
 
 deepseek:
   model: "deepseek-chat"
-
-push:
-  bark: {}
-    # server_url: "https://api.day.app"  # 不设置则默认使用官方地址
-
-  # 微信测试号：启用后自动推送给所有扫码关注的人
-  # 无需手动管理 OpenID，脚本自动拉取关注列表
-  wechat:
-    enabled: true
-    appid_env: WECHAT_APPID
-    secret_env: WECHAT_SECRET
-    template_id_env: WECHAT_TEMPLATE_ID
-    # recipients:  # 极少用到：不在关注列表里的额外接收人
-    #   - "oXXXXXX..."
