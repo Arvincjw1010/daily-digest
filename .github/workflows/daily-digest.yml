@@ -41,6 +41,14 @@ jobs:
           git diff --staged --quiet || git commit -m "update digest page"
           git push
 
+      - name: Send notifications (after HTML is live)
+        run: python notify.py
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          WECHAT_APPID: ${{ secrets.WECHAT_APPID }}
+          WECHAT_SECRET: ${{ secrets.WECHAT_SECRET }}
+          WECHAT_TEMPLATE_ID: ${{ secrets.WECHAT_TEMPLATE_ID }}
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
