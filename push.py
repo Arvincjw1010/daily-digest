@@ -102,25 +102,24 @@ def _wechat_format(text: str, max_len: int = 600) -> str:
     return text
 
 
-def _send_template(access_token: str, user_id: str, template_id: str, title: str, content: str) -> bool:
+def _send_template(access_token: str, user_id: str, template_id: str, title: str, content: str, url: Optional[str] = None) -> bool:
     """向单个用户发送模板消息。"""
-    from datetime import datetime
-    version = datetime.utcnow().strftime("%H%M%S")
-    content = f"[v{version}] " + _wechat_format(content)
-    print(f"  [DEBUG] 最终发送内容开头(50字): '{content[:50]}'")
-    print(f"  [DEBUG] 最终内容长度: {len(content)}")
+    content = _wechat_format(content)
+    body = {
+        "touser": user_id,
+        "template_id": template_id,
+        "data": {
+            "title": {"value": title, "color": "#173177"},
+            "content": {"value": content, "color": "#000000"},
+        },
+    }
+    if url:
+        body["url"] = url
     try:
         resp = requests.post(
             "https://api.weixin.qq.com/cgi-bin/message/template/send",
             params={"access_token": access_token},
-            json={
-                "touser": user_id,
-                "template_id": template_id,
-                "data": {
-                    "title": {"value": title, "color": "#173177"},
-                    "content": {"value": content, "color": "#000000"},
-                },
-            },
+            json=body,
             timeout=10,
         )
         resp.raise_for_status()
@@ -142,6 +141,7 @@ def push_to_wechat_test_account(
     title: str,
     content: str,
     extra_recipients: Optional[list[str]] = None,
+    url: Optional[str] = None,
 ) -> bool:
     """通过微信测试号推送到所有关注者。
 
@@ -168,7 +168,7 @@ def push_to_wechat_test_account(
     print(f"  -> 共 {len(user_ids)} 位接收人")
     success = 0
     for user_id in user_ids:
-        if _send_template(access_token, user_id, template_id, title, content):
+        if _send_template(access_token, user_id, template_id, title, content, url=url):
             success += 1
 
     print(f"  [OK] 微信推送完成：成功 {success}/{len(user_ids)} 人")
