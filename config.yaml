@@ -22,7 +22,7 @@ deepseek:
   model: "deepseek-chat"
 
 push:
-  bark:
+  bark: {}
     # server_url: "https://api.day.app"  # 不设置则默认使用官方地址
 
   # 微信测试号：启用后自动推送给所有扫码关注的人

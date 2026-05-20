@@ -91,7 +91,7 @@ def main():
         "wechat_content": wechat_content,
         "digest_url": digest_url,
         "bark_key": os.environ.get("BARK_KEY"),
-        "bark_server_url": push_config.get("bark", {}).get("server_url"),
+        "bark_server_url": (push_config.get("bark") or {}).get("server_url"),
         "wechat_enabled": wechat_config.get("enabled", False),
         "wechat_appid_env": wechat_config.get("appid_env", "WECHAT_APPID"),
         "wechat_secret_env": wechat_config.get("secret_env", "WECHAT_SECRET"),
