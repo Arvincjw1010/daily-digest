@@ -66,7 +66,7 @@ def main():
         with open("public/index.html", "w", encoding="utf-8") as f:
             f.write(html)
         print("  [OK] HTML 页面已生成: public/index.html")
-        digest_url = "https://arvencjw1010.github.io/daily-digest/"
+        digest_url = "https://raw.githubusercontent.com/Arvincjw1010/daily-digest/main/public/index.html"
     except Exception as e:
         print(f"  [WARN] HTML 生成失败: {e}")
 
