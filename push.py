@@ -104,7 +104,11 @@ def _wechat_format(text: str, max_len: int = 600) -> str:
 
 def _send_template(access_token: str, user_id: str, template_id: str, title: str, content: str) -> bool:
     """向单个用户发送模板消息。"""
-    content = _wechat_format(content)
+    from datetime import datetime
+    version = datetime.utcnow().strftime("%H%M%S")
+    content = f"[v{version}] " + _wechat_format(content)
+    print(f"  [DEBUG] 最终发送内容开头(50字): '{content[:50]}'")
+    print(f"  [DEBUG] 最终内容长度: {len(content)}")
     try:
         resp = requests.post(
             "https://api.weixin.qq.com/cgi-bin/message/template/send",
