@@ -101,6 +101,37 @@ def generate_html(title: str, sections: list[str]) -> str:
 </html>"""
 
 
+def generate_article_html(title: str, sections: list[str]) -> str:
+    """生成适合微信公众号图文消息的 HTML 正文（无外部 CSS，纯内容结构）。
+
+    微信公众号的正文渲染有自己的样式表，我们只输出内容标签。
+    """
+    items_html = ""
+    for section_text in sections:
+        lines = section_text.strip().split("\n")
+        heading = "AI / 大模型"
+        content_lines = []
+
+        for line in lines:
+            line = line.strip()
+            if not line:
+                continue
+            if line.startswith("# "):
+                heading = line[2:].strip()
+                continue
+            content_lines.append(f"<p>{_line_to_html(line)}</p>")
+
+        items_html += f"<h2>{heading}</h2>\n{''.join(content_lines)}\n"
+
+    return (
+        f"<h1>{title}</h1>\n"
+        f'<p style="color:#888;font-size:14px;margin-bottom:20px">每日资讯 · AI 领域</p>\n'
+        f"{items_html}"
+        f'<hr style="border:none;border-top:1px solid #eee;margin:30px 0">\n'
+        f'<p style="color:#aaa;font-size:12px;text-align:center">由 DeepSeek 自动整理 · 仅供参考</p>'
+    )
+
+
 def _line_to_html(line: str) -> str:
     """把一行 Markdown 转成 HTML 片段。"""
     # Markdown 链接 [text](url) → <a href="url">text</a>

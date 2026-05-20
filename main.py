@@ -10,7 +10,8 @@ from dotenv import load_dotenv
 
 from search import search_interest
 from summarize import summarize_interest
-from html_generator import generate_html
+from html_generator import generate_html, generate_article_html
+from article import publish_article
 
 
 def load_config(path: str = "config.yaml") -> dict:
@@ -66,39 +67,49 @@ def main():
         with open("public/index.html", "w", encoding="utf-8") as f:
             f.write(html)
         print("  [OK] HTML 页面已生成: public/index.html")
-        digest_url = None  # 不加链接，内容直接写卡片里
     except Exception as e:
         print(f"  [WARN] HTML 生成失败: {e}")
 
-    # ---- 为微信生成紧凑版（直接包含摘要正文） ----
-    import re as _re
-    wechat_content = ""
-    for summary in all_summaries:
-        # 去掉 # 标题
-        text = _re.sub(r'^#+\s*', '', summary, flags=_re.MULTILINE)
-        # 去掉 ** 加粗
-        text = text.replace('**', '')
-        # 去掉 Markdown 链接标记: [text](url) -> text
-        text = _re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', text)
-        # 去掉 --- 分隔线
-        text = _re.sub(r'^---+$', '', text, flags=_re.MULTILINE)
-        # 合并多余空行
-        text = _re.sub(r'\n{3,}', '\n\n', text)
-        # 每行开头缩进
-        lines = [l.strip() for l in text.split('\n') if l.strip()]
-        text = '\n'.join(lines)
-        wechat_content += text + '\n\n'
+    # ---- 发布为公众号图文消息 ----
+    if wechat_config.get("enabled", False):
+        wechat_appid = os.environ.get(wechat_config.get("appid_env", "WECHAT_APPID"))
+        wechat_secret = os.environ.get(wechat_config.get("secret_env", "WECHAT_SECRET"))
+        if wechat_appid and wechat_secret:
+            article_html = generate_article_html(title, all_summaries)
+            article_url = publish_article(wechat_appid, wechat_secret, title, article_html)
+            if article_url:
+                digest_url = article_url
+                print(f"  [OK] 文章链接将用于模板消息")
+        else:
+            print(f"  [WARN] 微信凭证未设置，跳过文章发布")
 
-    wechat_content = wechat_content.strip()
-    # 限制总长度（微信显示大约 600-800 字比较稳妥）
-    if len(wechat_content) > 600:
-        wechat_content = wechat_content[:597] + '...'
+    # ---- 为微信生成简短摘要（控制 280 字以内，微信有字节限制） ----
+    import re as _re
+    wechat_part = ""
+    for summary in all_summaries:
+        text = summary
+        # 去 # 标题
+        text = _re.sub(r'^#+\s*', '', text, flags=_re.MULTILINE)
+        # 去 ** 加粗
+        text = text.replace('**', '')
+        # 链接 [text](url) -> text
+        text = _re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', text)
+        # 去 ---
+        text = _re.sub(r'^---+$', '', text, flags=_re.MULTILINE)
+        # 去多余空行
+        text = _re.sub(r'\n{3,}', '\n\n', text)
+        wechat_part += text.strip() + '\n'
+
+    wechat_part = wechat_part.strip()
+    # 截断到 280 字（约 840 字节，留余量）
+    if len(wechat_part) > 280:
+        wechat_part = wechat_part[:277] + '...'
 
     # ---- 把所有推送信息存成 JSON（notify.py 会读） ----
     payload = {
         "title": title,
         "full_content": full_content,
-        "wechat_content": wechat_content,
+        "wechat_content": wechat_part,
         "digest_url": digest_url,
         "bark_key": os.environ.get("BARK_KEY"),
         "bark_server_url": (push_config.get("bark") or {}).get("server_url"),
