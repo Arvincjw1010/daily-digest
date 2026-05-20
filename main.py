@@ -66,7 +66,7 @@ def main():
         with open("public/index.html", "w", encoding="utf-8") as f:
             f.write(html)
         print("  [OK] HTML 页面已生成: public/index.html")
-        digest_url = "https://cdn.jsdelivr.net/gh/Arvincjw1010/daily-digest@main/public/index.html"
+        digest_url = None  # 不加链接，内容直接写卡片里
     except Exception as e:
         print(f"  [WARN] HTML 生成失败: {e}")
 
