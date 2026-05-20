@@ -28,9 +28,9 @@ push:
   # 微信测试号：启用后自动推送给所有扫码关注的人
   # 无需手动管理 OpenID，脚本自动拉取关注列表
   wechat:
-    enabled: false
-    # appid_env: WECHAT_APPID
-    # secret_env: WECHAT_SECRET
-    # template_id_env: WECHAT_TEMPLATE_ID
+    enabled: true
+    appid_env: WECHAT_APPID
+    secret_env: WECHAT_SECRET
+    template_id_env: WECHAT_TEMPLATE_ID
     # recipients:  # 极少用到：不在关注列表里的额外接收人
     #   - "oXXXXXX..."
