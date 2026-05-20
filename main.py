@@ -10,8 +10,7 @@ from dotenv import load_dotenv
 
 from search import search_interest
 from summarize import summarize_interest
-from html_generator import generate_html, generate_article_html
-from article import publish_article
+from html_generator import generate_html
 
 
 def load_config(path: str = "config.yaml") -> dict:
@@ -70,18 +69,8 @@ def main():
     except Exception as e:
         print(f"  [WARN] HTML 生成失败: {e}")
 
-    # ---- 发布为公众号图文消息 ----
-    if wechat_config.get("enabled", False):
-        wechat_appid = os.environ.get(wechat_config.get("appid_env", "WECHAT_APPID"))
-        wechat_secret = os.environ.get(wechat_config.get("secret_env", "WECHAT_SECRET"))
-        if wechat_appid and wechat_secret:
-            article_html = generate_article_html(title, all_summaries)
-            article_url = publish_article(wechat_appid, wechat_secret, title, article_html)
-            if article_url:
-                digest_url = article_url
-                print(f"  [OK] 文章链接将用于模板消息")
-        else:
-            print(f"  [WARN] 微信凭证未设置，跳过文章发布")
+    # ---- 发布为公众号图文消息（暂跳过，IP 白名单问题待解决） ----
+    # 后续可恢复：publish_article() 成功后 digest_url = 返回的 URL
 
     # ---- 为微信生成简短摘要（控制 280 字以内，微信有字节限制） ----
     import re as _re
