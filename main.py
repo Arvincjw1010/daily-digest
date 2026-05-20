@@ -70,19 +70,29 @@ def main():
     except Exception as e:
         print(f"  [WARN] HTML 生成失败: {e}")
 
-    # ---- 为微信生成简短版 ----
-    wechat_lines = []
+    # ---- 为微信生成紧凑版（直接包含摘要正文） ----
+    import re as _re
+    wechat_content = ""
     for summary in all_summaries:
-        for line in summary.split("\n"):
-            line = line.strip()
-            if line.startswith("**") and line.endswith("**"):
-                wechat_lines.append(line.strip("*").strip())
-            elif line.startswith("- **"):
-                t = line.split("**")[1] if "**" in line else line[:40]
-                wechat_lines.append(t)
-    wechat_content = "\n".join(wechat_lines[:8])
-    if not wechat_content:
-        wechat_content = "今日 AI 资讯已更新，详情请查看完整推送"
+        # 去掉 # 标题
+        text = _re.sub(r'^#+\s*', '', summary, flags=_re.MULTILINE)
+        # 去掉 ** 加粗
+        text = text.replace('**', '')
+        # 去掉 Markdown 链接标记: [text](url) -> text
+        text = _re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', text)
+        # 去掉 --- 分隔线
+        text = _re.sub(r'^---+$', '', text, flags=_re.MULTILINE)
+        # 合并多余空行
+        text = _re.sub(r'\n{3,}', '\n\n', text)
+        # 每行开头缩进
+        lines = [l.strip() for l in text.split('\n') if l.strip()]
+        text = '\n'.join(lines)
+        wechat_content += text + '\n\n'
+
+    wechat_content = wechat_content.strip()
+    # 限制总长度（微信显示大约 600-800 字比较稳妥）
+    if len(wechat_content) > 600:
+        wechat_content = wechat_content[:597] + '...'
 
     # ---- 把所有推送信息存成 JSON（notify.py 会读） ----
     payload = {
