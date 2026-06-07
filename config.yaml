@@ -41,10 +41,10 @@ interests:
   - name: "新奇AI工具与玩法"
     note: "社区发现的有趣工具、创意应用、行业趣闻"
     rss_feeds:
-      # Show HN = 纯项目展示，不是讨论帖
+      # Show HN = 纯项目展示
       - https://hnrss.org/show?q=ai+OR+llm+OR+gpt+OR+claude+OR+agent+OR+chatgpt+OR+openai+OR+tool
-      # HN AI 相关讨论（过滤较严）
-      - https://hnrss.org/frontpage?q=ai+tool+OR+llm+app+OR+chatgpt+plugin+OR+claude+use+OR+new+ai+startup
+      # HN AI 讨论（放宽一些，Show HN 有时不够）
+      - https://hnrss.org/frontpage?q=ai+OR+llm+OR+gpt+OR+claude+OR+agent+OR+chatgpt+OR+openai+OR+copilot
     keywords:
       - "new AI tool launched today"
       - "cool AI project github"
@@ -53,26 +53,26 @@ interests:
       - "fun AI experiment demo try"
       - "AI创业 新产品 有趣应用"
       - "AI工具推荐 效率提升"
-    title_filter: "ai|llm|gpt|claude|chatgpt|openai|anthropic|gemini|agent|workflow|copilot|开源|玩法|实验|hack|deck|built with"
+    title_filter: "ai|llm|gpt|claude|chatgpt|openai|anthropic|gemini|agent|workflow|copilot|开源|玩法|实验|hack|deck|built with|lathe|show hn"
     exclude_filter: "hiring|is hiring|YC.*is hiring|job|career|funding|raise \\$|series [a-c]|investor|onlyfans|economy of|encyclical|please ship|ship.*official|feature request|pope|religion|catholic"
     max_articles: 8
 
   - name: "吃喝玩乐·生活方式"
-    note: "探店、旅行、好物、周末去哪"
+    note: "探店、旅行、好物、周末去哪（国内好内容多在微信/抖音，RSS很弱，这条分类属于有比没有强）"
     rss_feeds:
-      # 少数派生活类内容（与国内AI共享 feed，靠过滤分流）
       - https://sspai.com/feed
-      # 什么值得买 - 好价/好文
-      - https://feed.smzdm.com
+      # RSSHub 小红书关键词（依赖 rsshub.app 公共实例，可能不稳定）
+      - https://rsshub.app/xiaohongshu/keyword/探店-美食
+      - https://rsshub.app/xiaohongshu/keyword/周末去哪儿
     keywords:
       - "周末去哪 探店 美食 推荐"
       - "旅行 目的地 攻略 推荐"
-      - "好物推荐 评测 值得买"
-      - "新店开张 网红打卡"
-      - "数码好物 家居好物 开箱"
+      - "好物推荐 开箱 体验"
+      - "新店 网红 打卡"
       - "咖啡 精酿 酒吧 甜品"
-    title_filter: "美食|探店|餐厅|咖啡|酒吧|甜品|饮品|旅行|旅游|攻略|打卡|周末|好物|开箱|值得买|推荐|新店|家居|数码|穿搭|好价|优惠|酒|精酿|测评|体验|小众|宝藏|隐藏|清单|合集"
-    exclude_filter: "AI|人工智能|大模型|chatgpt|claude|gpt|llm|编程|代码|开发|融资|上市|政策|监管|招聘|实习|校招|早报|晚报|日报|周报|广告|推广|软文|macOS|Windows|Linux|存储|备份|Apple 设计奖|响度|SSTV"
+      - "家居好物 穿搭 清单"
+    title_filter: "美食|探店|餐厅|咖啡|酒吧|甜品|饮品|旅行|旅游|攻略|打卡|周末|好物|开箱|推荐|新店|家居|穿搭|好价|优惠|酒|精酿|测评|体验|小众|宝藏|隐藏|清单|合集|citywalk|露营|野餐|brunch|下午茶|日料|火锅|烧烤|面包|冰淇淋|民宿|酒店"
+    exclude_filter: "AI|人工智能|大模型|chatgpt|claude|gpt|llm|编程|代码|融资|上市|政策|监管|招聘|校招|早报|晚报|日报|周报|广告|推广|macOS|Windows|Linux|存储|备份|Apple 设计奖|响度|SSTV|背包"
     max_articles: 6
 
 deepseek:
