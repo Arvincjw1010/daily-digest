@@ -2,17 +2,61 @@
 #   - name: "领域名"
 #     rss_feeds: ["rss地址1", "rss地址2"]
 #     keywords: ["关键词1", "keyword2"]
-#     max_articles: 5
+#     max_articles: 8
 
 interests:
-  - name: "AI / 大模型"
+  - name: "大模型产品动态"
+    note: "官方公告 + 核心产品更新，严肃信息"
     rss_feeds:
-      - https://news.ycombinator.com/rss
-      - https://arxiv.org/rss/cs.AI
-      - https://feeds.feedburner.com/TechCrunch
-      - https://www.theverge.com/rss/ai-artificial-intelligence/index.xml
-    keywords: ["AI", "大模型", "LLM", "GPT", "Claude", "deep learning"]
-    max_articles: 5
+      - https://openai.com/blog/rss.xml
+      # HN 上关于 Anthropic/Claude 的讨论（替代 Anthropic 自己缺失的 RSS）
+      - https://hnrss.org/frontpage?q=anthropic+OR+claude+release+OR+claude+update+OR+claude+new+feature
+      # Simon Willison - LLM 领域最敏锐的产品观察者
+      - https://simonwillison.net/atom/entries/
+    keywords:
+      - "ChatGPT update new feature"
+      - "Claude model release update Anthropic new"
+      - "OpenAI GPT model API product launch"
+      - "Gemini Google AI update new feature"
+      - "大模型 ChatGPT Claude 更新 新功能"
+    title_filter: "chatgpt|claude|gpt-5|gpt-4|anthropic|gemini|llm|new feature|release|推出|新功能|发布|上线|升级|更新|memory|codex|agent|api|opus|pro|flash"
+    exclude_filter: "policy|governance|safety|blueprint|agenda|youth|biodefense|rosalind|travelers|endava|wasmer|democratic|regulation|datasette|opinion|onlyfans|economy|encyclical|sandbox|micropython|wasm|product.market fit|profitable quarter|rumor|please ship|ship.*official|linux desktop|feature request|lathe|show hn"
+    max_articles: 6
+
+  - name: "国内AI动态"
+    note: "中文媒体：大模型、AI应用、政策风向、国产替代"
+    rss_feeds:
+      - https://www.jiqizhixin.com/rss
+      - https://www.qbitai.com/feed
+      - https://sspai.com/feed
+    keywords:
+      - "国内大模型 新进展 2025 2026"
+      - "中国AI 人工智能 应用 产品"
+      - "国产AI 大模型 发布"
+      - "百度 文心 阿里 通义 字节 豆包"
+      - "AI行业 政策 监管 动向"
+    title_filter: "大模型|AI|人工智能|chatgpt|claude|gpt|llm|deepseek|文心|通义|豆包|kimi|智谱|百川|开源|发布|推出|上线|新功能|融资|上市|应用|产品|国产|芯片|算力|agent|智能体"
+    exclude_filter: "广告|推广|软文|招聘|实习|校招|社招|活动报名|直播预告|早报|晚报|日报|周报|福利|抽奖"
+    max_articles: 8
+
+  - name: "新奇AI工具与玩法"
+    note: "社区发现的有趣工具、创意应用、行业趣闻"
+    rss_feeds:
+      # Show HN = 纯项目展示，不是讨论帖
+      - https://hnrss.org/show?q=ai+OR+llm+OR+gpt+OR+claude+OR+agent+OR+chatgpt+OR+openai+OR+tool
+      # HN AI 相关讨论（过滤较严）
+      - https://hnrss.org/frontpage?q=ai+tool+OR+llm+app+OR+chatgpt+plugin+OR+claude+use+OR+new+ai+startup
+    keywords:
+      - "new AI tool launched today"
+      - "cool AI project github"
+      - "interesting AI use case application"
+      - "AI agent workflow automation tool"
+      - "fun AI experiment demo try"
+      - "AI创业 新产品 有趣应用"
+      - "AI工具推荐 效率提升"
+    title_filter: "ai|llm|gpt|claude|chatgpt|openai|anthropic|gemini|agent|workflow|copilot|开源|玩法|实验|hack|deck|built with"
+    exclude_filter: "hiring|is hiring|YC.*is hiring|job|career|funding|raise \\$|series [a-c]|investor|onlyfans|economy of|encyclical|please ship|ship.*official|feature request|pope|religion|catholic"
+    max_articles: 8
 
 deepseek:
   model: "deepseek-chat"
