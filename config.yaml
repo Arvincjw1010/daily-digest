@@ -26,7 +26,6 @@ interests:
   - name: "国内AI动态"
     note: "中文媒体：大模型、AI应用、政策风向、国产替代"
     rss_feeds:
-      - https://www.jiqizhixin.com/rss
       - https://www.qbitai.com/feed
       - https://sspai.com/feed
     keywords:
@@ -36,7 +35,7 @@ interests:
       - "百度 文心 阿里 通义 字节 豆包"
       - "AI行业 政策 监管 动向"
     title_filter: "大模型|AI|人工智能|chatgpt|claude|gpt|llm|deepseek|文心|通义|豆包|kimi|智谱|百川|开源|发布|推出|上线|新功能|融资|上市|应用|产品|国产|芯片|算力|agent|智能体"
-    exclude_filter: "广告|推广|软文|招聘|实习|校招|社招|活动报名|直播预告|早报|晚报|日报|周报|福利|抽奖"
+    exclude_filter: "广告|推广|软文|招聘|实习|校招|社招|活动报名|直播预告|早报|晚报|日报|周报|福利|抽奖|本周看什么|存储管理|漫谈|响度战争|背包|SSTV|Apple 设计奖"
     max_articles: 8
 
   - name: "新奇AI工具与玩法"
