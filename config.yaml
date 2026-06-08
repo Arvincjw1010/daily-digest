@@ -58,20 +58,19 @@ interests:
     max_articles: 8
 
   - name: "吃喝玩乐·生活方式"
-    note: "探店、旅行、好物、周末去哪（国内好内容多在微信/抖音，RSS很弱，这条分类属于有比没有强）"
+    note: "广州探店、周末去哪、好物"
     rss_feeds:
       - https://sspai.com/feed
-      # RSSHub 小红书关键词（依赖 rsshub.app 公共实例，可能不稳定）
-      - https://rsshub.app/xiaohongshu/keyword/探店-美食
-      - https://rsshub.app/xiaohongshu/keyword/周末去哪儿
+      - https://rsshub.app/xiaohongshu/keyword/广州美食探店
+      - https://rsshub.app/xiaohongshu/keyword/广州周末去哪儿
+      - https://rsshub.app/xiaohongshu/keyword/广州咖啡新店
+      - https://rsshub.app/xiaohongshu/keyword/广州宝藏小店
     keywords:
-      - "周末去哪 探店 美食 推荐"
-      - "旅行 目的地 攻略 推荐"
-      - "好物推荐 开箱 体验"
-      - "新店 网红 打卡"
-      - "咖啡 精酿 酒吧 甜品"
-      - "家居好物 穿搭 清单"
-    title_filter: "美食|探店|餐厅|咖啡|酒吧|甜品|饮品|旅行|旅游|攻略|打卡|周末|好物|开箱|推荐|新店|家居|穿搭|好价|优惠|酒|精酿|测评|体验|小众|宝藏|隐藏|清单|合集|citywalk|露营|野餐|brunch|下午茶|日料|火锅|烧烤|面包|冰淇淋|民宿|酒店"
+      - "广州 美食 探店 推荐"
+      - "广州 周末 去哪 好去处"
+      - "广州 新店 咖啡 酒吧 甜品"
+      - "广州 好物 开箱 测评"
+    title_filter: "美食|探店|餐厅|咖啡|酒吧|甜品|旅行|攻略|打卡|周末|好物|开箱|推荐|新店|家居|穿搭|好价|优惠|酒|精酿|测评|小众|宝藏|hidden|清单|合集|citywalk|露营|brunch|下午茶|日料|火锅|烧烤|面包|冰淇淋|民宿|酒店|广州|天河|越秀|荔湾|海珠|番禺|白云|黄埔|佛山|顺德|早茶|糖水|煲仔|啫啫|肠粉|烧腊|云吞|牛杂|钵仔糕|柠檬茶|大排档|老字号|东山口|珠江新城|琶洲|沙面|永庆坊|西关|北京路|体育西|江南西|员村|棠下"
     exclude_filter: "AI|人工智能|大模型|chatgpt|claude|gpt|llm|编程|代码|融资|上市|政策|监管|招聘|校招|早报|晚报|日报|周报|广告|推广|macOS|Windows|Linux|存储|备份|Apple 设计奖|响度|SSTV|背包"
     max_articles: 6
 
